@@ -1,0 +1,6 @@
+@TracksifyAPI_HostAddress = http://localhost:5263
+
+GET {{TracksifyAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
