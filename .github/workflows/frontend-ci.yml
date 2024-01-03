@@ -1,0 +1,45 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    branches:
+      - Tracksify-Dev
+    paths:
+      - 'frontend/**'
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.9.0]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Check for merge conflicts
+      run: git diff --quiet || (echo "Merge conflicts found. Please resolve them before merging."; exit 1)
+
+    - name: Check for .gitignore
+      run: |
+        if [ -e "frontend/.gitignore" ]; then
+          echo "Error: .gitignore file detected in frontend. Remove it before merging.";
+          exit 1;
+        fi
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run ESLint
+      run: npm run lint
+
+    - name: Build
+      run: npm run build --if-present
