@@ -1,27 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/*PRIMARY COLORS*/
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+    --background:#ffffff ;
+    --foreground:#F0F3F7;
+    --background-btn:#E5E9F2;
+    --color-btn: #A1CCFF;
+    --text-color:#0084FE;
+    --main-text-color:#535F75;
+    --text-tertiary: #1D1E2C;
+    --color-hover: #E5E9F2;
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  }
 }
