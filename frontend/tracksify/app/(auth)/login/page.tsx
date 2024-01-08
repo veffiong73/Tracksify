@@ -1,7 +1,6 @@
 import Logo from "@/components/logo";
 import Home from "@/app/page";
 import Link from "next/link";
-//import { main } from "@/components/main"; // Add the import statement for the 'main' component
 
 const LoginPage = () => {
   return (
@@ -53,6 +52,7 @@ const LoginPage = () => {
                   placeholder="Password"
                 />
               </div>
+
               <div className="">
                 <Link href="/dashboard">
                   <button className="border   hover:bg-color_hover w-full   font-bold text-text_tertiary py-4 px-5 rounded mt-5 ">
