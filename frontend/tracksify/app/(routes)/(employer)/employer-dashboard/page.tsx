@@ -14,7 +14,7 @@ const page = () => {
               Good Morning Mathilda,
             </h1>
             <div className="flex justify-end pr-44 pb-4 ">
-              <button className="bg-text_secondary   text-white hover:text-text_tertiary hover:bg-color_hover rounded px-4 py-2 mt-4">
+              <button className="bg-text_secondary text-white hover:text-text_tertiary hover:bg-color_hover rounded px-4 py-2 mt-4">
                 Create Project
               </button>
             </div>
@@ -43,9 +43,10 @@ const page = () => {
                   className=" hover:bg-color_hover p-5 cursor-pointer"
                 >
                   Project 1
-                  <p className=" hover:bg-color_hover p-5">Dec 1, 2023</p>
-                  <p className=" hover:bg-color_hover p-5">Dec 31, 2023</p>
                 </Link>
+
+                <p className=" hover:bg-color_hover p-5">Dec 1, 2023</p>
+                <p className=" hover:bg-color_hover p-5">Dec 31, 2023</p>
                 <select
                   className="p-5"
                   onChange={(e) => console.log(e.target.value)}

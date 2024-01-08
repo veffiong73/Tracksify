@@ -1,8 +1,16 @@
+"use client"
 import Logo from "@/components/logo";
 import Home from "@/app/page";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
+  const router = useRouter()
+
+  const handleLogin = () => {
+    router.push('/dashboard')
+  }
+
   return (
     <div>
       <main className="flex">
@@ -54,12 +62,10 @@ const LoginPage = () => {
               </div>
 
               <div className="">
-                <Link href="/dashboard">
-                  <button className="border   hover:bg-color_hover w-full   font-bold text-text_tertiary py-4 px-5 rounded mt-5 ">
+                  <button onClick={handleLogin} className="border   hover:bg-color_hover w-full   font-bold text-text_tertiary py-4 px-5 rounded mt-5 ">
                     {" "}
                     Log In{" "}
                   </button>
-                </Link>
               </div>
             </form>
           </div>
