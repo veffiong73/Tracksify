@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using TracksifyAPI;
 using TracksifyAPI.Data;
+using TracksifyAPI.Interfaces;
+using TracksifyAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
+// Registering Dependency Injection for UserRepository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
