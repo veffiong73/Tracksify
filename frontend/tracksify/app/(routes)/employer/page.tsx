@@ -43,9 +43,10 @@ const page = () => {
                   className=" hover:bg-color_hover p-5 cursor-pointer"
                 >
                   Project 1
-                  <p className=" hover:bg-color_hover p-5">Dec 1, 2023</p>
-                  <p className=" hover:bg-color_hover p-5">Dec 31, 2023</p>
                 </Link>
+
+                <p className=" hover:bg-color_hover p-5">Dec 1, 2023</p>
+                <p className=" hover:bg-color_hover p-5">Dec 31, 2023</p>
                 <select
                   className="p-5"
                   onChange={(e) => console.log(e.target.value)}

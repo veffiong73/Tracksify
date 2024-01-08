@@ -70,13 +70,21 @@ const Navbar = () => {
           <Link
             href={link.link}
             key={link.name}
-            className=" bg-color_hover rounded-full px-2 py-2 m-2 hover:text-text_secondary font-sm hover:text-black text-text_secondary"
+            className=" bg-color_hover rounded-full px-2 py-2 m-2  font-sm  text-text_tertiary hover:text_secondary"
           >
             {link.name}
           </Link>
         ))}
       </div>
-      <div>{userRole === "employee" && <div>Hello</div>}</div>
+      <div>
+        {userRole === "employer" && (
+          <div className="border-2 outline  border-red-500">
+            <button className="bg-text_secondary p-2 m-2   text-white rounded-full">
+              FO
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
