@@ -3,14 +3,14 @@
     public class User
     {
         public Guid UserId { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public string? Password { get; set; }
-        public string? Role { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
         public UserType UserType { get; set; } = UserType.Employee;
         public bool IsDeleted { get; set; } = false;
-        public ICollection<Project>? Projects { get; set; }
-        public ICollection<ProjectUpdate>? ProjectUpdates { get; set; }
+        public ICollection<Project> Projects { get; set; } = new List<Project>();
+        public ICollection<ProjectUpdate> ProjectUpdates { get; set; } = new List<ProjectUpdate>();
     }
 }
