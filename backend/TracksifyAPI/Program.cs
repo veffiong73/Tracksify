@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
 // Registering Dependency Injection for UserRepository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+// Registering Dependency Injection for ProjectRepository
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
