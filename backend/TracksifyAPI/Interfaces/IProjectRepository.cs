@@ -11,13 +11,11 @@ namespace TracksifyAPI.Interfaces
         Task<List<Project>> GetAllProjectsAsync(ProjectQueryObject query);
         Task<Project> GetProjectByProjectIdASync(Guid projectId);
         Task<Project> GetProjectByUserIdASync(Guid userId);
-       // Task<Project> GetProjectByStartDateASync(string startDate);
         Task<bool> ProjectExistsASync(Guid projectId);
 
-        //Task<bool> ProjectExistsASync(ProjectQueryObject query);
         Task<ICollection<User>> GetProjectAssigneesASync(Guid projectId);
 
         // POST Methods
-        Task<Project> ProjectASync(Project project);
+        Task<Project> CreateProjectASync(Project project);
     }
 }

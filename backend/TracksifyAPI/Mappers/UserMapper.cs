@@ -23,6 +23,7 @@ namespace TracksifyAPI.Mappers
                 Role = userModel.Role,
                 UserType = userModel.UserType,
                 IsDeleted = userModel.IsDeleted,
+                Projects = userModel.Projects.Select(p => p.ToProjectDto()).ToList(),
             };
         }
 

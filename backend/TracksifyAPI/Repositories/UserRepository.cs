@@ -53,17 +53,19 @@ namespace TracksifyAPI.Repositories
                 users = users.Where(u => u.Role.Contains(query.Role));
             }
 
-            return await users.ToListAsync();
+            return await users.Include(u => u.Projects).ToListAsync();
         }
 
         /**
          * GetUserByIdAsync - Asynchronously Gets a User by their Global Unique Identifier
          *  @userId: userId of the user to be retrieved. This would be gotten from the url
-         * Return: returns a User or NULL
+         * Return: returns a User and the projects assigned or NULL
          */
         public async Task<User?> GetUserByIdAsync(Guid userId)
         {
-            return await _context.Users.FindAsync(userId);
+            return await _context.Users
+                                 .Include(u => u.Projects)
+                                 .FirstOrDefaultAsync(u => u.UserId == userId);
         }
 
         /**

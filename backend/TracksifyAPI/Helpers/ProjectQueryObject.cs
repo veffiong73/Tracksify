@@ -2,13 +2,16 @@
 
 namespace TracksifyAPI.Helpers
 {
+    /**
+     * ProjectQueryObject - defines properties that can be used to search or filter a Project
+     */
     public class ProjectQueryObject
     {
-        //public Guid ProjectId { get; set; }
+        // ? sets the property as on optional parameter when making a query
+        public Guid ProjectId { get; set; }
         public string? ProjectName { get; set; }
         public DateTime? StartDate { get; set; }
-        /*public ProjectStatus ProjectStatus { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime DueDate { get; set; }*/
+        public ProjectStatus? ProjectStatus { get; set; }
+        public DateTime? DueDate { get; set; }
     }
 }
