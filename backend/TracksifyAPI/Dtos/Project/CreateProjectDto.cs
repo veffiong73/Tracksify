@@ -3,14 +3,14 @@
 namespace TracksifyAPI.Dtos.Project
 {
     /**
-     * ProjectDto - this is a response Data Transfer Object */
-    public class ProjectDto
+     * UpdateUserDto - this is a request Dto update a new User
+     */
+    public class CreateProjectDto
     {
-        public Guid ProjectId { get; set; }
         public string ProjectName { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime DueDate { get; set; }
         public string ProjectDescription { get; set; } = string.Empty;
-        public ProjectStatus ProjectStatus { get; set; } = ProjectStatus.Pending;
     }
 }
+

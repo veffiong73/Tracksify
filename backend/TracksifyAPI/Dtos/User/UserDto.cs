@@ -1,4 +1,5 @@
-﻿using TracksifyAPI.Models;
+﻿using TracksifyAPI.Dtos.Project;
+using TracksifyAPI.Models;
 
 namespace TracksifyAPI.Dtos.User
 {
@@ -14,5 +15,6 @@ namespace TracksifyAPI.Dtos.User
         public string? Role { get; set; }
         public UserType UserType { get; set; } = UserType.Employee;
         public bool IsDeleted { get; set; } = false;
+        public List<ProjectDto> Projects { get; set; } = new List<ProjectDto>();
     }
 }

@@ -6,65 +6,90 @@ using TracksifyAPI.Models;
 
 namespace TracksifyAPI.Repositories
 {
+    /* ProjectRepository implemments the methods defined in the interface repository */
     public class ProjectRepository : IProjectRepository
     {
         private readonly TracksifyDataContext _context;
+
+        // constructor
         public ProjectRepository(TracksifyDataContext context)
         {
             _context = context;            
         }
+
+        /*
+         * GetAllProjectsAsync - Asynchronously Gets all the projects in the database.
+         * It does this based on some defined query object
+         * @query: query parameter specified in the ProjectQueryObject class
+         * Return: Returns the result based on the query. If no query is specified it returns all
+         */
         public async Task<List<Project>> GetAllProjectsAsync(ProjectQueryObject query)
         {
-            // gets all the projects from the database context
-            // and stores it in the variable
-            // AsQueryable method converts ienumerable collection to iqueryable
-            // Queryable means being you can ask it for data and it can return data
-//            
+         /*
+         * * Query all projects
+         * Get all projects from db context and store in a queryable form
+         * Queryable means you can ask it for data and it can return data */
 
-            // if we pass in the name or status, it should be able to return all
-            // all projects with that name or status respectively
+            IQueryable<Project> projects = _context.Projects;
 
-          /*  if (!string.IsNullOrWhiteSpace(query.ProjectName))
-            {
-                projects = projects.Where(p => p.ProjectName.Contains(query.ProjectName));
-            }*/
-
-            
-           
- /*           if (query.ProjectStatus != null)
-            {
-                    projects = projects.Where(p => p.ProjectStatus == (query.ProjectStatus));
-            }
-
-            if (query.StartDate != null)
-            {
-                projects = projects.Where(p => p.StartDate == (query.StartDate));
-            }
-
-            if (query.DueDate != null)
-            {
-                projects = projects.Where(p => p.DueDate == (query.DueDate));
-            }*/
-            var projects = _context.Projects.AsQueryable();
-
+            // Search for all projects that match the project name, status or date passed in
             if (!string.IsNullOrWhiteSpace(query.ProjectName))
             {
                 projects = projects.Where(p => p.ProjectName.Contains(query.ProjectName));
             }
 
-            if (!DateTime.ToString.)
-            return await projects.ToListAsync();
+            if (query.ProjectStatus != null)
+            {
+                projects = projects.Where(p => p.ProjectStatus == query.ProjectStatus);
+            }
 
+            if (query.StartDate != null)
+            {
+                projects = projects.Where(p => p.StartDate == query.StartDate);
+            }
+
+            if (query.DueDate != null)
+            {
+                projects = projects.Where(p => p.DueDate == query.DueDate);
+            }
+
+            return await projects.ToListAsync();
         }
+        /**
+          * GetProjectByProjectIdASync - Asynchronously Gets a Project by their Global Unique Identifier
+          *  @projectId: projectId of the projectId to be retrieved. This would be gotten from the url
+          * Return: returns a Project or NULL
+          */
         public async Task<Project> GetProjectByProjectIdASync(Guid projectId)
         {
             return await _context.Projects.FindAsync(projectId);
         }
 
+        public async Task<Project> GetProjectByUserIdASync(Guid userId)
+        {
+            return await _context.Projects.FindAsync(userId);
+        }
+
+        /**
+         * ProjectExistsASync - Asynchronously checks that a project exists based on the ID
+         * @projectId: projectId of the project that wants to check if it exists
+         * Return: True or False
+         */
+        public async Task<bool> ProjectExistsASync(Guid projectId)
+        {
+            return await _context.Projects.AnyAsync(p => p.ProjectId == projectId);
+
+        }
+
+        /**
+        * GetProjectAssigneesASync - Asynchronously gets the users assigned to a new project
+        * @projectId: projectid of the project in which the users would be retrieved from
+        * Return: returns an icollection of users 
+        */
         public async Task<ICollection<User>> GetProjectAssigneesASync(Guid projectId)
         {
-            // get all projects from db context, get project matching project id and bring out the assignees in that instance
-            var projectassignees = await _context.Projects.Where(p =>p.ProjectId == projectId).Select(o => o.ProjectAssignees).FirstOrDefaultAsync();
+            // Get all projects from db context, get project matching project id and bring out the assignees in that instance
+            var projectassignees = await _context.Projects.Where(p => p.ProjectId == projectId).Select(o => o.ProjectAssignees).FirstOrDefaultAsync();
 
             if (projectassignees == null)
             {
@@ -74,41 +99,19 @@ namespace TracksifyAPI.Repositories
             return projectassignees;
         }
 
-/*        public async Task<Project> GetProjectByStartDateASync(string startDate)
+
+        // POST Methods
+
+        /**
+        * CreateProjectASync - Asynchronously creates a new project
+        * @project: project to be created
+        * Return: returns a new Project
+        */
+        public async Task<Project> CreateProjectASync(Project project)
         {
-            return await _context.Projects.FindAsync(startDate);
-        }
-*/
-        public async Task<Project> GetProjectByUserIdASync(Guid userId)
-        {
-            return await _context.Projects.FindAsync(userId);
-        }
-
-        public async Task<bool> ProjectExistsASync(Guid projectId)
-        {
-            return await _context.Projects.AnyAsync(p => p.ProjectId == projectId);
-
-        }
-
-        /*        public async Task<bool> ProjectExistsASync(ProjectQueryObject query)
-                {
-                    var projects = _context.Projects.AsQueryable();
-
-                    if (!string.IsNullOrWhiteSpace(query.ProjectName))
-                    {
-                        projects = projects.Where(p => p.ProjectName.Contains(query.ProjectName));
-                    }
-
-                    if (query.ProjectId != null)
-                    {
-                        projects = projects.Where(p => p.ProjectId == query.ProjectId);
-                    }
-                    return await projects.AnyAsync();
-                }*/
-
-        public async Task<Project> ProjectASync(Project project)
-        {
-            throw new NotImplementedException();
+            await _context.Projects.AddAsync(project);
+            await _context.SaveChangesAsync();
+            return (project);
         }
     }
 }
