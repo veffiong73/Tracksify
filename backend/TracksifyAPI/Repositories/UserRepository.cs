@@ -53,7 +53,9 @@ namespace TracksifyAPI.Repositories
                 users = users.Where(u => u.Role.Contains(query.Role));
             }
 
-            return await users.Include(u => u.Projects).ToListAsync();
+            return await users
+                         .Include(u => u.Projects)
+                         .ToListAsync();
         }
 
         /**
@@ -98,16 +100,6 @@ namespace TracksifyAPI.Repositories
             existingUser.LastName = updateUserDto.LastName;
             existingUser.Email = updateUserDto.Email;
             existingUser.Role = updateUserDto.Role;
-
-            // ensuring that only an admin can disable a user 
-            if (existingUser.UserType == UserType.Admin)
-            {
-                existingUser.IsDeleted = updateUserDto.IsDeleted;
-            }
-            else
-            {
-                existingUser.IsDeleted = false;
-            }
 
             await _context.SaveChangesAsync();
             return (existingUser);
