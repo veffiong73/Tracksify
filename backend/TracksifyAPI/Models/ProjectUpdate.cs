@@ -6,7 +6,7 @@ namespace TracksifyAPI.Models
     {
         public Guid ProjectUpdateId { get; set; }
         public DateTime CheckIn { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.Today;
         public DateTime CheckOut { get; set; }
         public string WorkDone { get; set; } = string.Empty;
         public  Guid ProjectId { get; set; }
