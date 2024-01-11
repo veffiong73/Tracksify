@@ -12,7 +12,7 @@ namespace TracksifyAPI.Controllers
      * UserController - Controller class for the User endpoints. Serves as a gateway to the endpoints
      *  - Inherits: This class inherits from the ControllerBase class. Gives access to the Attributes
      */
-    [Route("api/user")]
+    [Route("tracksify/user")]
     [ApiController]
     public class UserController : ControllerBase
     {
