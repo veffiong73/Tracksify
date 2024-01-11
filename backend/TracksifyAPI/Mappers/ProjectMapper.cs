@@ -21,7 +21,7 @@ namespace TracksifyAPI.Mappers
                 StartDate = projectModel.StartDate,
                 DueDate = projectModel.DueDate,
                 ProjectDescription = projectModel.ProjectDescription,
-                ProjectStatus = projectModel.ProjectStatus,
+                ProjectStatus = projectModel.ProjectStatus
             };
         }
 
