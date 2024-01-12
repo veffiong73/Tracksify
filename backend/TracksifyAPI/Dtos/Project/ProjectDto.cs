@@ -1,4 +1,5 @@
-﻿using TracksifyAPI.Models;
+﻿using TracksifyAPI.Dtos.ProjectUpdates;
+using TracksifyAPI.Models;
 
 namespace TracksifyAPI.Dtos.Project
 {

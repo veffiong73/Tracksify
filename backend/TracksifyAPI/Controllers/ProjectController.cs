@@ -12,12 +12,12 @@ namespace TracksifyAPI.Controllers
      * ProjectController - Controller class for the Project endpoints. Serves as a gateway to the endpoints.
      * Inherits: This class inherits from the ControllerBase class. Gives access to the Attributes and Methods.
      */
-    [Route("api/project")]
+    [Route("tracksify/project")]
     [ApiController]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectRepository _projectRepository;
-        public ProjectController(IProjectRepository projectRepository)
+        public ProjectController(IProjectRepository projectRepository, IUserRepository userRepository)
         {
             _projectRepository = projectRepository;
         }
@@ -66,6 +66,24 @@ namespace TracksifyAPI.Controllers
             }
             return NotFound();
         }
+
+         /*[HttpGet("user-project/{userId:Guid}")]
+        public async Task<IActionResult> GetProjectByUserId([FromRoute] Guid userId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Checks if user with user Id passed in exists
+            // Maps user to userDto and returns user Dto
+            if (await _userRepository.UserExistsAsync(userId))
+            {
+                var projects = await _projectRepository.GetProjectByUserIdASync(userId);
+
+                var projectDto = projects!.Select(p => p.ToProjectDto());
+                return Ok(projectDto);
+            }
+            return NotFound();
+        }*/
 
         /**
          * CreateProject - Creates a new Project

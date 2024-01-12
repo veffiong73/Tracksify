@@ -37,7 +37,6 @@ namespace TracksifyAPI.Repositories
             {
                 projects = projects.Where(p => p.ProjectName.Contains(query.ProjectName));
             }
-
             if (query.ProjectStatus != null)
             {
                 projects = projects.Where(p => p.ProjectStatus == query.ProjectStatus);
@@ -53,21 +52,22 @@ namespace TracksifyAPI.Repositories
                 projects = projects.Where(p => p.DueDate == query.DueDate);
             }
 
-            return await projects.ToListAsync();
+            return await projects.Include(p => p.ProjectUpdates).ToListAsync();
         }
         /**
           * GetProjectByProjectIdASync - Asynchronously Gets a Project by their Global Unique Identifier
           *  @projectId: projectId of the projectId to be retrieved. This would be gotten from the url
           * Return: returns a Project or NULL
           */
-        public async Task<Project> GetProjectByProjectIdASync(Guid projectId)
+        public async Task<Project?> GetProjectByProjectIdASync(Guid projectId)
         {
-            return await _context.Projects.FindAsync(projectId);
+            return await _context.Projects
+                                 .Include(p => p.ProjectUpdates)
+                                 .FirstOrDefaultAsync(p => p.ProjectId == projectId);
         }
-
-        public async Task<Project> GetProjectByUserIdASync(Guid userId)
+        public async Task<List<Project>> GetProjectByUserIdASync(Guid userId)
         {
-            return await _context.Projects.FindAsync(userId);
+            return await _context.Projects.Include(p => p.ProjectAssignees.Where(u => u.UserId == userId)).ToListAsync();
         }
 
         /**
@@ -99,7 +99,6 @@ namespace TracksifyAPI.Repositories
             return projectassignees;
         }
 
-
         // POST Methods
 
         /**
@@ -113,5 +112,10 @@ namespace TracksifyAPI.Repositories
             await _context.SaveChangesAsync();
             return (project);
         }
+
+/*        public Task<Project> GetProjectByUserIdASync(Guid userId)
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }
