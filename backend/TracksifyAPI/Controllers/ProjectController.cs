@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TracksifyAPI.Dtos.Project;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
 using TracksifyAPI.Mappers;
-using TracksifyAPI.Models;
-using TracksifyAPI.Repositories;
 
 namespace TracksifyAPI.Controllers
 {
@@ -51,7 +48,6 @@ namespace TracksifyAPI.Controllers
                 var projectDto = projects.Select(p => p.ToProjectDto());
 
                 return Ok(projectDto);
-            
         }
         /**
          * GetProjectByProjectId - Gets a Project by their Global Unique Identifier.
