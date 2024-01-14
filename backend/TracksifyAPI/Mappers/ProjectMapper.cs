@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using TracksifyAPI.Data;
-using TracksifyAPI.Dtos.Project;
-using TracksifyAPI.Interfaces;
+﻿using TracksifyAPI.Dtos.Project;
 using TracksifyAPI.Models;
-using TracksifyAPI.Repositories;
 
 namespace TracksifyAPI.Mappers
 {
@@ -28,8 +24,6 @@ namespace TracksifyAPI.Mappers
                 ProjectDescription = projectModel.ProjectDescription,
                 ProjectStatus = projectModel.ProjectStatus,
                 ProjectAssignees = projectModel.ProjectAssignees.Select(u => u.UserId).ToList(),
-                //ProjectAssignees = new List<User>(projectModel.ProjectAssignees), 
-                //ProjectAssignees = projectModel.ProjectAssignees.Select(u => new AddUserToProjectDto { UserId = u.UserId }).ToList()
         };
         }
 
@@ -44,9 +38,7 @@ namespace TracksifyAPI.Mappers
                  ProjectName = projectDto.ProjectName,
                  StartDate = projectDto.StartDate,
                  DueDate = projectDto.DueDate,
-                 ProjectDescription = projectDto.ProjectDescription,
-                 // we should be able to get the user by user Id method in user repo
-                // ProjectAssignees = projectDto.ProjectAssignees.g,
+                 ProjectDescription = projectDto.ProjectDescription
             };
         }
     }
