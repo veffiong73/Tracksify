@@ -14,7 +14,5 @@ namespace TracksifyAPI.Dtos.Project
         public string ProjectDescription { get; set; } = string.Empty;
         public ProjectStatus ProjectStatus { get; set; } = ProjectStatus.Pending;
         public List<Guid> ProjectAssignees { get; set; } = new List<Guid>();
-
-        //  public List<TracksifyAPI.Models.User> ProjectAssignees { get; set; } 
     }
 }
