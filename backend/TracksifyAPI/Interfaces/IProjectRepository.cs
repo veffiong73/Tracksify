@@ -1,4 +1,6 @@
-﻿using TracksifyAPI.Helpers;
+﻿using TracksifyAPI.Dtos.Project;
+using TracksifyAPI.Dtos.User;
+using TracksifyAPI.Helpers;
 using TracksifyAPI.Models;
 
 namespace TracksifyAPI.Interfaces
@@ -14,8 +16,11 @@ namespace TracksifyAPI.Interfaces
         Task<bool> ProjectExistsASync(Guid projectId);
 
         Task<ICollection<User>> GetProjectAssigneesASync(Guid projectId);
+        Task<Project?> UpdateProjectASync(Guid projectId, Project project);
 
         // POST Methods
         Task<Project> CreateProjectASync(Project project);
+        Task DeleteProjectAsync(Project project);
+
     }
 }

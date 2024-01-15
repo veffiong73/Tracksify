@@ -12,6 +12,7 @@ namespace TracksifyAPI.Mappers
          * ToProjectDto - Converts a Project Object to a Dto
          * @projectModel: Project object to be converted
          */
+
         public static ProjectDto ToProjectDto(this Project projectModel)
         {
             return new ProjectDto
@@ -21,13 +22,14 @@ namespace TracksifyAPI.Mappers
                 StartDate = projectModel.StartDate,
                 DueDate = projectModel.DueDate,
                 ProjectDescription = projectModel.ProjectDescription,
-                ProjectStatus = projectModel.ProjectStatus
+                ProjectStatus = projectModel.ProjectStatus,
+                ProjectAssignees = projectModel.ProjectAssignees.Select(u => u.UserId).ToList(),
             };
         }
 
         /**
          * ToProjectFromCreateProjectDto - Converts a create project request Dto to a Project object
-         * userDto: The create project request Dto
+         * 
          */
         public static Project ToProjectFromCreateProjectDto(this CreateProjectDto projectDto) 
         {
@@ -36,7 +38,19 @@ namespace TracksifyAPI.Mappers
                  ProjectName = projectDto.ProjectName,
                  StartDate = projectDto.StartDate,
                  DueDate = projectDto.DueDate,
-                 ProjectDescription = projectDto.ProjectDescription 
+                 ProjectDescription = projectDto.ProjectDescription
+            };
+        }
+
+        public static Project ToProjectFromUpdateProjectDto(this UpdateProjectDto projectDto)
+        {
+            return new Project
+            {
+                ProjectName = projectDto.ProjectName,
+                StartDate = projectDto.StartDate,
+                DueDate = projectDto.DueDate,
+                ProjectStatus = projectDto.ProjectStatus,
+                ProjectDescription = projectDto.ProjectDescription
             };
         }
     }

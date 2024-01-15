@@ -52,7 +52,9 @@ namespace TracksifyAPI.Repositories
                 projects = projects.Where(p => p.DueDate == query.DueDate);
             }
 
-            return await projects.Include(p => p.ProjectUpdates).ToListAsync();
+            return await projects.Include(p => p.ProjectAssignees)
+                                 .Include(p => p.ProjectUpdates)
+                                 .ToListAsync();
         }
         /**
           * GetProjectByProjectIdASync - Asynchronously Gets a Project by their Global Unique Identifier
@@ -62,12 +64,16 @@ namespace TracksifyAPI.Repositories
         public async Task<Project?> GetProjectByProjectIdASync(Guid projectId)
         {
             return await _context.Projects
+                                 .Include(p => p.ProjectAssignees)
                                  .Include(p => p.ProjectUpdates)
                                  .FirstOrDefaultAsync(p => p.ProjectId == projectId);
         }
         public async Task<List<Project>> GetProjectByUserIdASync(Guid userId)
         {
-            return await _context.Projects.Include(p => p.ProjectAssignees.Where(u => u.UserId == userId)).ToListAsync();
+            return await _context.Projects
+                                  .Include(p => p.ProjectAssignees
+                                  .Where(u => u.UserId == userId))
+                                  .ToListAsync();
         }
 
         /**
@@ -77,7 +83,8 @@ namespace TracksifyAPI.Repositories
          */
         public async Task<bool> ProjectExistsASync(Guid projectId)
         {
-            return await _context.Projects.AnyAsync(p => p.ProjectId == projectId);
+            return await _context.Projects
+                                 .AnyAsync(p => p.ProjectId == projectId);
 
         }
 
@@ -89,7 +96,10 @@ namespace TracksifyAPI.Repositories
         public async Task<ICollection<User>> GetProjectAssigneesASync(Guid projectId)
         {
             // Get all projects from db context, get project matching project id and bring out the assignees in that instance
-            var projectassignees = await _context.Projects.Where(p => p.ProjectId == projectId).Select(o => o.ProjectAssignees).FirstOrDefaultAsync();
+            var projectassignees = await _context.Projects
+                                                 .Where(p => p.ProjectId == projectId)
+                                                 .Select(o => o.ProjectAssignees)
+                                                 .FirstOrDefaultAsync();
 
             if (projectassignees == null)
             {
@@ -113,9 +123,37 @@ namespace TracksifyAPI.Repositories
             return (project);
         }
 
-/*        public Task<Project> GetProjectByUserIdASync(Guid userId)
+        public async Task<Project?> UpdateProjectASync(Guid projectId, Project project)
         {
-            throw new NotImplementedException();
-        }*/
+            // how does the cimpiler know the existing project is of type project
+            var existingProject = await _context.Projects
+                                                .FirstOrDefaultAsync(p => p.ProjectId == projectId);
+
+            if (existingProject == null)
+            {
+                return null;
+            }
+
+            existingProject.ProjectName = project.ProjectName;
+            existingProject.ProjectDescription = project.ProjectDescription;
+            existingProject.StartDate = project.StartDate;
+            existingProject.DueDate = project.DueDate;
+            existingProject.ProjectStatus = project.ProjectStatus;
+            existingProject.ProjectAssignees = project.ProjectAssignees;
+
+            await _context.SaveChangesAsync();
+            return (existingProject);
+        }
+
+        public async Task DeleteProjectAsync(Project project)
+        {
+            _context.Projects.Remove(project);
+            await _context.SaveChangesAsync();
+        }
+
+        /*        public Task<Project> GetProjectByUserIdASync(Guid userId)
+                {
+                    throw new NotImplementedException();
+                }*/
     }
 }

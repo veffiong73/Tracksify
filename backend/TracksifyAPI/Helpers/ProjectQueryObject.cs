@@ -8,7 +8,6 @@ namespace TracksifyAPI.Helpers
     public class ProjectQueryObject
     {
         // ? sets the property as on optional parameter when making a query
-        public Guid ProjectId { get; set; }
         public string? ProjectName { get; set; }
         public DateTime? StartDate { get; set; }
         public ProjectStatus? ProjectStatus { get; set; }
