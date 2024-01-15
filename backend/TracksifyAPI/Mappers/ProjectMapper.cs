@@ -24,7 +24,7 @@ namespace TracksifyAPI.Mappers
                 ProjectDescription = projectModel.ProjectDescription,
                 ProjectStatus = projectModel.ProjectStatus,
                 ProjectAssignees = projectModel.ProjectAssignees.Select(u => u.UserId).ToList(),
-        };
+            };
         }
 
         /**
@@ -39,6 +39,18 @@ namespace TracksifyAPI.Mappers
                  StartDate = projectDto.StartDate,
                  DueDate = projectDto.DueDate,
                  ProjectDescription = projectDto.ProjectDescription
+            };
+        }
+
+        public static Project ToProjectFromUpdateProjectDto(this UpdateProjectDto projectDto)
+        {
+            return new Project
+            {
+                ProjectName = projectDto.ProjectName,
+                StartDate = projectDto.StartDate,
+                DueDate = projectDto.DueDate,
+                ProjectStatus = projectDto.ProjectStatus,
+                ProjectDescription = projectDto.ProjectDescription
             };
         }
     }
