@@ -1,6 +1,4 @@
-﻿using TracksifyAPI.Models;
-
-namespace TracksifyAPI.Dtos.Project
+﻿namespace TracksifyAPI.Dtos.Project
 {
     /**
      * CreateProjectDto - this is a request Dto to create a new Project
