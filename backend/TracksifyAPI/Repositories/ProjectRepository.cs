@@ -123,9 +123,37 @@ namespace TracksifyAPI.Repositories
             return (project);
         }
 
-/*        public Task<Project> GetProjectByUserIdASync(Guid userId)
+        public async Task<Project?> UpdateProjectASync(Guid projectId, Project project)
         {
-            throw new NotImplementedException();
-        }*/
+            // how does the cimpiler know the existing project is of type project
+            var existingProject = await _context.Projects
+                                                .FirstOrDefaultAsync(p => p.ProjectId == projectId);
+
+            if (existingProject == null)
+            {
+                return null;
+            }
+
+            existingProject.ProjectName = project.ProjectName;
+            existingProject.ProjectDescription = project.ProjectDescription;
+            existingProject.StartDate = project.StartDate;
+            existingProject.DueDate = project.DueDate;
+            existingProject.ProjectStatus = project.ProjectStatus;
+            existingProject.ProjectAssignees = project.ProjectAssignees;
+
+            await _context.SaveChangesAsync();
+            return (existingProject);
+        }
+
+        public async Task DeleteProjectAsync(Project project)
+        {
+            _context.Projects.Remove(project);
+            await _context.SaveChangesAsync();
+        }
+
+        /*        public Task<Project> GetProjectByUserIdASync(Guid userId)
+                {
+                    throw new NotImplementedException();
+                }*/
     }
 }
