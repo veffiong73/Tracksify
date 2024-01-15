@@ -3,6 +3,7 @@ using TracksifyAPI.Dtos.Project;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
 using TracksifyAPI.Mappers;
+using TracksifyAPI.Models;
 
 namespace TracksifyAPI.Controllers
 {
@@ -124,6 +125,56 @@ namespace TracksifyAPI.Controllers
                 nameof(GetProjectByProjectId),
                 new { projectId = Guid.NewGuid() },
                 project.ToProjectDto());
+        }
+
+        [HttpPut]
+        [Route("{projectId}")]
+        public async Task<IActionResult> Update([FromRoute] Guid projectId, [FromBody] UpdateProjectDto projectUpdateDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (await _projectRepository.ProjectExistsASync(projectId))
+            {
+                var updatedProject = projectUpdateDto.ToProjectFromUpdateProjectDto();
+                
+                // fetch the project object for the ids in projectDTo.projectassignees
+                foreach (var userId in projectUpdateDto.ProjectAssignees)
+                {
+                    var user = await _userRepository.GetUserByIdAsync(userId);
+                    if (user == null)
+                    {
+                        return BadRequest($"User with ID {userId} not found.");
+                    }
+                    updatedProject.ProjectAssignees.Add(user);
+                };
+
+                // Update the existing project in the repository
+                await _projectRepository.UpdateProjectASync(projectId, updatedProject);
+
+                return Ok(updatedProject!.ToProjectDto());
+            }
+
+            return NotFound("Project Not Found");
+        }
+
+        [HttpDelete]
+        [Route("{projectId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid projectId)
+        {
+            // Checks for validation errors. Returns bool.
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // check if projectId passed in is present in the repository
+            var project = await _projectRepository.GetProjectByProjectIdASync(projectId);
+            if (project == null)
+            {
+                return NotFound("Project Not Found");
+            }
+
+            await _projectRepository.DeleteProjectAsync(project);
+            return Ok();
         }
     }
 }
