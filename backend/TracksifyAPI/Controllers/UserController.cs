@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TracksifyAPI.Dtos.User;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
@@ -17,9 +16,11 @@ namespace TracksifyAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly IEmailService _emailService;
+        public UserController(IUserRepository userRepository, IEmailService emailService)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         /**
@@ -77,9 +78,38 @@ namespace TracksifyAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var userExists = await _userRepository.GetUserByEmailAsync(userCreateDto.Email);
+
+            if (userExists != null)
+            {
+                return Conflict($"User with email {userCreateDto.Email} already exists");
+            }
+
             var user = userCreateDto.ToUserFromCreateUserDto();
-             
-            await _userRepository.CreateUserAsync(user);
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+            var saved = await _userRepository.CreateUserAsync(user);
+
+            /*try
+            {
+                await _emailService.SendHtmlEmailAsync(
+                                                        user.Email.ToString(),
+                                                        $"Congratulations {user.FirstName}",
+                                                        "Welcome",
+                                                        new { Name = user.FirstName + " " + user.LastName }
+                                                        );
+                //_emailService.SendEmailAsync(user.Email, "Congratulations", "Welcome to Tracksify APP");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Welcome message failed to send");
+            }*/
+
+            if (saved == null)
+                return Problem(title: "Something went wrong");
 
             return CreatedAtAction(
                 nameof(GetById),
@@ -108,6 +138,24 @@ namespace TracksifyAPI.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("delete-user/{userId}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null)
+                return NotFound("User doesn't exist");
+
+            await _userRepository.DeleteUserAsync(user);
+            return Ok();
         }
     }
 }
