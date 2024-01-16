@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 using TracksifyAPI.Data;
 using TracksifyAPI.Dtos.User;
 using TracksifyAPI.Helpers;
@@ -132,6 +131,17 @@ namespace TracksifyAPI.Repositories
 
             // returns IsDeleted property i.e true or false
             return isDisabled;
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+        }
+
+        public async Task DeleteUserAsync(User user)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

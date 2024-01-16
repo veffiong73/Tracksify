@@ -11,6 +11,8 @@ namespace TracksifyAPI.Interfaces
     {
         Task<List<User>> GetAllUsersAsync(UserQueryObject query);
         Task<User?> GetUserByIdAsync(Guid userId);
+        Task<User?> GetUserByEmailAsync(string email);
+        Task DeleteUserAsync(User user);
         Task<User> CreateUserAsync(User user);
         Task<User?> UpdateUserAync(Guid userId, UpdateUserDto updateUserDto);
         Task<bool> UserExistsAsync(Guid userId);
