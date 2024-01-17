@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NETCore.MailKit.Core;
 using TracksifyAPI.Dtos.User;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
@@ -16,11 +18,9 @@ namespace TracksifyAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailService _emailService;
-        public UserController(IUserRepository userRepository, IEmailService emailService)
+        public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _emailService = emailService;
         }
 
         /**
@@ -29,6 +29,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns the result based on the query. If no query is specified it returns all users
          */
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll([FromQuery] UserQueryObject query)
         {
             // Checks for validation errors. returns bool.
@@ -50,6 +51,7 @@ namespace TracksifyAPI.Controllers
          * Return: returns a User or Not Found()
          */
         [HttpGet("{userId:Guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)
@@ -73,6 +75,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns a User Dto
          */
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([FromBody] CreateUserDto userCreateDto)
         {
             if (!ModelState.IsValid)
@@ -125,6 +128,7 @@ namespace TracksifyAPI.Controllers
          */
         [HttpPut]
         [Route("{userId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] UpdateUserDto updateUserDto)
         {
             if (!ModelState.IsValid)
@@ -142,6 +146,7 @@ namespace TracksifyAPI.Controllers
 
         [HttpDelete]
         [Route("delete-user/{userId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)

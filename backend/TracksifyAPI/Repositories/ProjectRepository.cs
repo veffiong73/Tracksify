@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TracksifyAPI.Data;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
@@ -156,4 +158,9 @@ namespace TracksifyAPI.Repositories
                     throw new NotImplementedException();
                 }*/
     }
+    //public class TracksifyDataContext : IdentityDbContext<IdentityUser>
+    //{
+    //    // other DbSet properties and configurations
+    //}
+
 }
