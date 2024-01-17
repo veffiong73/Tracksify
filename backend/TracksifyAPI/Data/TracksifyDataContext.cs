@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TracksifyAPI.Models;
 
 namespace TracksifyAPI.Data
@@ -17,3 +19,4 @@ namespace TracksifyAPI.Data
         public DbSet<ProjectUpdate> ProjectUpdates { get; set; }
     }
 }
+
