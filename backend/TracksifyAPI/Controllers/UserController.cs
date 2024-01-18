@@ -29,7 +29,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns the result based on the query. If no query is specified it returns all users
          */
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> GetAll([FromQuery] UserQueryObject query)
         {
             // Checks for validation errors. returns bool.
@@ -51,7 +51,7 @@ namespace TracksifyAPI.Controllers
          * Return: returns a User or Not Found()
          */
         [HttpGet("{userId:Guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> GetById([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)
@@ -75,7 +75,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns a User Dto
          */
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Create([FromBody] CreateUserDto userCreateDto)
         {
             if (!ModelState.IsValid)
@@ -128,7 +128,7 @@ namespace TracksifyAPI.Controllers
          */
         [HttpPut]
         [Route("{userId}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] UpdateUserDto updateUserDto)
         {
             if (!ModelState.IsValid)
@@ -146,7 +146,7 @@ namespace TracksifyAPI.Controllers
 
         [HttpDelete]
         [Route("delete-user/{userId}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)
