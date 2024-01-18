@@ -33,7 +33,7 @@ namespace TracksifyAPI.Repositories
         {
             // Fetch Only Employees and active users
             var users =  _context.Users
-                .Where(u => (u.UserType != UserType.Admin) && (u.IsDeleted != true))
+                .Where(u => (u.UserType != UserType.Employer) && (u.IsDeleted != true))
                 .AsQueryable();
 
             //filtering
