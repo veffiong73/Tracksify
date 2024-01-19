@@ -123,6 +123,7 @@ app.UseAuthorization();
 // Mapping the controllers in the application
 app.MapControllers();
 
+
 // this runs the application
 app.Run();
 

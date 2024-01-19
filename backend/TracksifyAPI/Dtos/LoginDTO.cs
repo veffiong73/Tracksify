@@ -2,7 +2,7 @@
 
 namespace TracksifyAPI.Dtos
 {
-    //Defining a DTO for a user to Login
+    //the creation of the Login Data Transfer Object
     public class LoginDTO
     {
         // The user's email address and password is required and should be of type email address and type password)

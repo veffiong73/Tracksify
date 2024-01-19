@@ -32,7 +32,7 @@ namespace TracksifyAPI.Repositories
         public async Task<List<User>> GetAllUsersAsync(UserQueryObject query)
         {
             // Fetch Only Employees and active users
-            var users = _context.Users
+            var users =  _context.Users
                 .Where(u => (u.UserType != UserType.Employer) && (u.IsDeleted != true))
                 .AsQueryable();
 

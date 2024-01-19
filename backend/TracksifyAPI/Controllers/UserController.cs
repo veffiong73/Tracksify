@@ -28,7 +28,7 @@ namespace TracksifyAPI.Controllers
          * @query: query parameter specified in the QueryObject class
          * Return: Returns the result based on the query. If no query is specified it returns all users
          */
-       
+
         [HttpGet]
         // Restricting access to users with the Employer role
         [Authorize(Roles = "Employer")]
@@ -51,7 +51,7 @@ namespace TracksifyAPI.Controllers
          * Return: returns a User or Not Found()
          */
         [HttpGet("{userId:Guid}")]
-        [Authorize(Roles = "Employer")]   //remember to ask Emmanuel
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> GetById([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)

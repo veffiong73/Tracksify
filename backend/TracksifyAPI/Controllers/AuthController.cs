@@ -43,8 +43,8 @@ namespace TracksifyAPI.Controllers
                 token,
                 user = userDto
             });
-
         }
+
         [HttpPost]
         [Route("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
