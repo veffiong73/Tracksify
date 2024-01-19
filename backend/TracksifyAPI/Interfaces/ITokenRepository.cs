@@ -8,3 +8,8 @@ namespace TracksifyAPI.Interfaces
         string CreateJWTToken(User user);
     }
 }
+//    public interface ITokenRepository
+//    {
+//        Task<bool> ValidateResetTokenAsync(string resetToken);
+//    }
+//}

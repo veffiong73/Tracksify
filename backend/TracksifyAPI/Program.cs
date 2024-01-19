@@ -26,36 +26,44 @@ builder.Services.AddScoped<IProjectUpdateRepository, ProjectUpdateRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Addition of API explorer for endpoints
 builder.Services.AddEndpointsApiExplorer();
+
+// Addition of Swagger generator to the services collection
 builder.Services.AddSwaggerGen(options =>
 {
+    // Defining the Swagger document for Tracksify API version
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "TracksifyAPI", Version = "v1" });
+
+    // Defining the security scheme based on JWT bearer authentication
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
-            Scheme = JwtBearerDefaults.AuthenticationScheme
+        Scheme = JwtBearerDefaults.AuthenticationScheme
     });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-{
-    {
-        new OpenApiSecurityScheme
-        {
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = JwtBearerDefaults.AuthenticationScheme
-            },
-            Scheme = "OAuth2",
-            Name = JwtBearerDefaults.AuthenticationScheme,
-            In = ParameterLocation.Header
 
-        },
-        new List<string>()
-    }
+    // Applying the security requirement globally to all API operations
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtBearerDefaults.AuthenticationScheme
+                },
+                Scheme = "OAuth2",
+                Name = JwtBearerDefaults.AuthenticationScheme,
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
 });
-});
+
 
 //Registering Dependency Injection for Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
@@ -103,12 +111,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Redirecting HTTP requests to HTTPS
 app.UseHttpsRedirection();
 
+// Using the authentication middleware 
 app.UseAuthentication();
+
+// Using the authorization middleware
 app.UseAuthorization();
 
+// Mapping the controllers in the application
 app.MapControllers();
 
-
+// this runs the application
 app.Run();
+

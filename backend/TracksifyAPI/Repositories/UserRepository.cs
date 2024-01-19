@@ -28,11 +28,11 @@ namespace TracksifyAPI.Repositories
          * @query: query parameter specified in the QueryObject class
          * Return: Returns the result based on the query. If no query is specified it returns all
          */
-         
+
         public async Task<List<User>> GetAllUsersAsync(UserQueryObject query)
         {
             // Fetch Only Employees and active users
-            var users =  _context.Users
+            var users = _context.Users
                 .Where(u => (u.UserType != UserType.Employer) && (u.IsDeleted != true))
                 .AsQueryable();
 
