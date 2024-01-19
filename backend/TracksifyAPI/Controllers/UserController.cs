@@ -28,21 +28,21 @@ namespace TracksifyAPI.Controllers
          * @query: query parameter specified in the QueryObject class
          * Return: Returns the result based on the query. If no query is specified it returns all users
          */
+
         [HttpGet]
+        // Restricting access to users with the Employer role
         [Authorize(Roles = "Employer")]
         public async Task<IActionResult> GetAll([FromQuery] UserQueryObject query)
         {
-            // Checks for validation errors. returns bool.
+            // Check if the model state is valid. If not, return a BadRequest response
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            // Get all users from DB
+
             var users = await _userRepository.GetAllUsersAsync(query);
 
-            // Mapping each user to it's response Dto
             var userDto = users.Select(u => u.ToUserDto());
 
             return Ok(userDto);
-
         }
 
         /**
@@ -75,6 +75,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns a User Dto
          */
         [HttpPost]
+        // Restricting access to users with the Employer role
         [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Create([FromBody] CreateUserDto userCreateDto)
         {
@@ -128,6 +129,7 @@ namespace TracksifyAPI.Controllers
          */
         [HttpPut]
         [Route("{userId}")]
+        // Restricting access to users with the Employer role
         [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Update([FromRoute] Guid userId, [FromBody] UpdateUserDto updateUserDto)
         {
@@ -146,6 +148,7 @@ namespace TracksifyAPI.Controllers
 
         [HttpDelete]
         [Route("delete-user/{userId}")]
+        // Restricting access to users with the Employer role
         [Authorize(Roles = "Employer")]
         public async Task<IActionResult> Delete([FromRoute] Guid userId)
         {
