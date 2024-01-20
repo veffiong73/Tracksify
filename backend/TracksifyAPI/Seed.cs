@@ -30,7 +30,7 @@ namespace TracksifyAPI
                             Email = "john.doe@example.com",
                             Password = "password",
                             Role = "Supervisor",
-                            UserType = UserType.Admin
+                            UserType = UserType.Employer
                         },
                         new User
                         {

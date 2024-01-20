@@ -12,7 +12,7 @@ namespace TracksifyAPI.Interfaces
         // GET Methods
         Task<List<Project>> GetAllProjectsAsync(ProjectQueryObject query);
         Task<Project?> GetProjectByProjectIdASync(Guid projectId);
-        //Task<List<Project>> GetProjectByUserIdASync(Guid userId);
+        Task<List<Project>> GetProjectByUserIdASync(Guid userId);
         Task<bool> ProjectExistsASync(Guid projectId);
 
         Task<ICollection<User>> GetProjectAssigneesASync(Guid projectId);
