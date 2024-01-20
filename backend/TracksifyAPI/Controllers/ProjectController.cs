@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TracksifyAPI.Dtos.Project;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
@@ -73,7 +74,7 @@ namespace TracksifyAPI.Controllers
             return NotFound("Project does not exist.");
         }
 
-         /*[HttpGet("user-project/{userId:Guid}")]
+        [HttpGet("user-project/{userId:Guid}")]
         public async Task<IActionResult> GetProjectByUserId([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)
@@ -89,7 +90,7 @@ namespace TracksifyAPI.Controllers
                 return Ok(projectDto);
             }
             return NotFound();
-        }*/
+        }
 
         /**
          * CreateProject - Creates a new Project
@@ -97,6 +98,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns a Project Dto
          */
         [HttpPost]
+      //  [Authorize(Roles = "Employer")]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto projectCreateDto)
         {
             // Checks for validation errors. Returns bool.
@@ -128,6 +130,7 @@ namespace TracksifyAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Employer")]
         [Route("{projectId}")]
         public async Task<IActionResult> Update([FromRoute] Guid projectId, [FromBody] UpdateProjectDto projectUpdateDto)
         {
@@ -159,6 +162,7 @@ namespace TracksifyAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Employer")]
         [Route("{projectId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid projectId)
         {
