@@ -127,7 +127,6 @@ namespace TracksifyAPI.Repositories
 
         public async Task<Project?> UpdateProjectASync(Guid projectId, Project project)
         {
-            // how does the cimpiler know the existing project is of type project
             var existingProject = await _context.Projects
                                                 .FirstOrDefaultAsync(p => p.ProjectId == projectId);
 
@@ -152,15 +151,7 @@ namespace TracksifyAPI.Repositories
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
         }
-
-        /*        public Task<Project> GetProjectByUserIdASync(Guid userId)
-                {
-                    throw new NotImplementedException();
-                }*/
     }
-    //public class TracksifyDataContext : IdentityDbContext<IdentityUser>
-    //{
-    //    // other DbSet properties and configurations
-    //}
+
 
 }

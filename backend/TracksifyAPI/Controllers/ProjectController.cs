@@ -4,7 +4,7 @@ using TracksifyAPI.Dtos.Project;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
 using TracksifyAPI.Mappers;
-using TracksifyAPI.Models;
+
 
 namespace TracksifyAPI.Controllers
 {
@@ -98,7 +98,7 @@ namespace TracksifyAPI.Controllers
          * Return: Returns a Project Dto
          */
         [HttpPost]
-      //  [Authorize(Roles = "Employer")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto projectCreateDto)
         {
             // Checks for validation errors. Returns bool.
