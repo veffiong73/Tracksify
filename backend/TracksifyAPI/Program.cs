@@ -103,13 +103,15 @@ async void SeedData(IHost app)
     }
 }
 
-app.UseSwagger();
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI();
+
+/*if (app.Environment.IsDevelopment())
 {
     
     app.UseSwaggerUI();
-}
+}*/
 
 // Redirecting HTTP requests to HTTPS
 app.UseHttpsRedirection();
