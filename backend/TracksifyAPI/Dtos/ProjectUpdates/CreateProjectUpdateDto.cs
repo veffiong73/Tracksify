@@ -9,6 +9,5 @@
         public DateTime CheckOut { get; set; }
         public string WorkDone { get; set; } = string.Empty;
         public Guid ProjectId { get; set; }
-        public Guid UserId { get; set; }
     }
 }
