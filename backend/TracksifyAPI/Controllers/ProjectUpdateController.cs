@@ -89,14 +89,16 @@ namespace TracksifyAPI.Controllers
         }
 
         /**
-         * GetProjectUpdatesByUserId - Get's all project updates for all assignees to the project
+         * ------------------
+         * GetProjectUpdatesByUserId - Get's all project updates for "a project" assigned to a user
          * @userId: UserId of the User for which his/her project updates are being fetched
+         * @projectId: ProjectId to get updates for, for a particular user
          * Return: Returns a list of projectUpdates OR error
          */
         [HttpGet]
         [Authorize(Roles = "Employee")]
-        [Route("employee-projectUpdate")]
-        public async Task<IActionResult> GetProjectUpdatesByUserId()
+        [Route("employee-projectUpdate/project/{projectId:Guid}")]
+        public async Task<IActionResult> GetUserProjectUpdatesForAProjectByProjectId([FromRoute] Guid projectId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -108,9 +110,13 @@ namespace TracksifyAPI.Controllers
 
             var userId = Guid.Parse(userIdClaim.Value);
 
+            // Check if project Exists
+            if (!await _projectRepository.ProjectExistsASync(projectId))
+                return NotFound($"Project with id : {projectId} Not Found");
+
             if (await _userRepository.UserExistsAsync(userId))
             {
-                var projectUpdates = await _projectUpdateRepo.GetProjectUpdateByUserIdAsync(userId);
+                var projectUpdates = await _projectUpdateRepo.GetUserProjectUpdateForSingleProjectByProjectIdAsync(userId, projectId);
                 return Ok(projectUpdates);
             }
 
@@ -161,12 +167,14 @@ namespace TracksifyAPI.Controllers
 
             var userId = Guid.Parse(userIdClaim.Value);
 
+            // Check if project Exists
+            if (!await _projectRepository.ProjectExistsASync(projectId))
+                return NotFound($"Project with id : {projectId} Not Found");
+
             // checking that user exists
             if (!await _userRepository.UserExistsAsync(userId))
                 return NotFound("User doesn't exists");
 
-            if (!await _projectRepository.ProjectExistsASync(projectId))
-                return BadRequest($"Project with id : {projectId} Not Found");
 
             var projectUpdate = createProjectUpdateRequestDto.ToProjectUpdateFromCreateProjectUpdateDto(userId, projectId);
 
@@ -176,8 +184,8 @@ namespace TracksifyAPI.Controllers
             }
 
             // Checking that a ProjectUpdate hasn't be created on the same day by the same user
-            if (!await _projectUpdateRepo.ProjectUpdateExistsForThatDay(userId, projectUpdate.DateCreated))
-                return BadRequest("ProjectUpdate has been done for today");
+            if (await _projectUpdateRepo.ProjectUpdateExistsForThatDay(userId, projectId, projectUpdate.DateCreated))
+                return Conflict("ProjectUpdate has been done for today");
 
             await _projectUpdateRepo.CreateProjectUpdateAsync(projectUpdate);
 
