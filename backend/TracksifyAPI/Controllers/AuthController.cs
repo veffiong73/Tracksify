@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using TracksifyAPI.Dtos;
+using TracksifyAPI.Dtos.Login;
 using TracksifyAPI.Dtos.User;
 using TracksifyAPI.Interfaces;
 using TracksifyAPI.Mappers;
@@ -47,6 +48,7 @@ namespace TracksifyAPI.Controllers
 
         [HttpPost]
         [Route("ChangePassword")]
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
         {
             // Retrieving user based on the current user's identity 
