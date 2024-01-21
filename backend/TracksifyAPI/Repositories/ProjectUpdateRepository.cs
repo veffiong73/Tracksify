@@ -63,7 +63,18 @@ namespace TracksifyAPI.Repositories
         public async Task<List<ProjectUpdate>> GetProjectUpdateByUserIdAsync(Guid userId)
         {
             return await _context.ProjectUpdates.Where(p => p.UserId == userId).ToListAsync();
-        }  
+        }
+
+        /**
+         * GetUserProjectUpdateForSingleProjectByProjectIdAsync - GetProjectUpdate by userId for a particular project
+         * Return: returns a list of projectUpdates for the specific user
+         */
+        public async Task<List<ProjectUpdate>> GetUserProjectUpdateForSingleProjectByProjectIdAsync(Guid userId, Guid projectId)
+        {
+            return await _context.ProjectUpdates
+                                                .Where(p => p.UserId == userId && p.ProjectId == projectId)
+                                                .ToListAsync();
+        }
         /**
          * ProjectUpdateExistsAsync - Checks if ProjectUpdate Exists
          * Return: returns a bool
@@ -77,11 +88,12 @@ namespace TracksifyAPI.Repositories
          * ProjectUpdateExistsForThatDay - Checks that a projectUpdate has been created for that day
          * Return: returns true if it has been created
          */
-        public async Task<bool> ProjectUpdateExistsForThatDay(Guid userId, DateTime dateCreated)
+        public async Task<bool> ProjectUpdateExistsForThatDay(Guid userId, Guid projectId, DateTime dateCreated)
         {
             return await _context.ProjectUpdates
-                .Where(p => p.UserId == userId)
-                .AnyAsync(p => p.DateCreated == dateCreated);
+                                                .AnyAsync(p => p.UserId == userId &&
+                                                               p.ProjectId == projectId && 
+                                                               p.DateCreated.Date == dateCreated.Date);
         }
     }
 }

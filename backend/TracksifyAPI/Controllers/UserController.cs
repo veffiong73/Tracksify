@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NETCore.MailKit.Core;
 using TracksifyAPI.Dtos.User;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
@@ -30,7 +29,6 @@ namespace TracksifyAPI.Controllers
          * @query: query parameter specified in the QueryObject class
          * Return: Returns the result based on the query. If no query is specified it returns all users
          */
-
         [HttpGet]
         // Restricting access to users with the Employer role
         [Authorize(Roles = "Employer")]
@@ -97,22 +95,29 @@ namespace TracksifyAPI.Controllers
 
             var saved = await _userRepository.CreateUserAsync(user);
 
+            // Try to send Email           
             try
             {
+                
                 await _emailService.SendHtmlEmailAsync(
-                                                        user.Email.ToString(),
-                                                        $"Congratulations {user.FirstName}",
-                                                        "Welcome",
-                                                        new { Name = user.FirstName + " " + user.LastName }
-                                                        );
-                //_emailService.SendEmailAsync(user.Email, "Congratulations", "Welcome to Tracksify APP");
-
+                    user.Email.ToString(),
+                    "Welcome to Tracksify",
+                    "Welcome",
+                    new
+                    {
+                        Name = user.FirstName + " " + user.LastName,
+                        Email = user.Email,
+                        Password = userCreateDto.Password, // Note: Sending passwords via email is generally not recommended for security reasons.
+                        ResetPasswordLink = "https://serene-hamster-177974.netlify.app/"
+                    }
+                );
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Welcome message failed to send");
             }
+
 
             if (saved == null)
                 return Problem(title: "Something went wrong");

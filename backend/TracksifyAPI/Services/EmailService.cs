@@ -1,4 +1,5 @@
-﻿using MimeKit;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
 using TracksifyAPI.Interfaces;
 
 
@@ -45,9 +46,9 @@ namespace TracksifyAPI.Services
 
 
 
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.gmail.com", 587, false);
+                await client.ConnectAsync("smtp.gmail.com", 465, true);
                 await client.AuthenticateAsync(_config.GetSection("EmailSettings:EmailSender").Value, _config.GetSection("EmailSettings:EmailPassword").Value);
                 await client.SendAsync(message);
                 await client.DisconnectAsync(true);
