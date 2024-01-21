@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using FluentAssertions.Common;
 using Microsoft.OpenApi.Models;
+using TracksifyAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +87,16 @@ builder.Services.AddControllers().AddNewtonsoftJson( options =>
 builder.Services.AddDbContext<TracksifyDataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString"));
+});
+
+builder.Services.AddSingleton<IEmailService>(provider =>
+{
+    var logger = provider.GetRequiredService<ILogger<EmailService>>();
+    var environment = provider.GetRequiredService<IWebHostEnvironment>();
+
+    var templatesFolderPath = Path.Combine(environment.ContentRootPath, "Emails");
+
+    return new EmailService(templatesFolderPath, logger, builder.Configuration);
 });
 
 var app = builder.Build();

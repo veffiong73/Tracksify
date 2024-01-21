@@ -43,7 +43,7 @@ namespace TracksifyAPI.Controllers
                 // Checks if projects is empty
                 if (!projects.Any())
                 {
-                    return NotFound("No projects were found.");
+                    return BadRequest("No projects were found.");
                 }
 
                 // Maps each project to its Dto
@@ -158,7 +158,7 @@ namespace TracksifyAPI.Controllers
                 return Ok(updatedProject!.ToProjectDto());
             }
 
-            return NotFound("Project Not Found");
+            return BadRequest("Project Not Found");
         }
 
         [HttpDelete]
@@ -178,7 +178,11 @@ namespace TracksifyAPI.Controllers
             }
 
             await _projectRepository.DeleteProjectAsync(project);
-            return Ok();
+            return Ok(new
+            {
+                status = "success",
+                message = "Project Deleted"
+            });
         }
     }
 }

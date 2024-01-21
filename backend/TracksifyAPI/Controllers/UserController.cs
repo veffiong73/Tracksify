@@ -163,7 +163,11 @@ namespace TracksifyAPI.Controllers
                 return NotFound("User doesn't exist");
 
             await _userRepository.DeleteUserAsync(user);
-            return Ok();
+            return Ok(new
+            {
+                status = "success",
+                message = "User Deleted"
+            });
         }
     }
 }
