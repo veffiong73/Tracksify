@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TracksifyAPI.Dtos
+namespace TracksifyAPI.Dtos.Login
 {
     //the creation of the Login Data Transfer Object
     public class LoginDTO
