@@ -18,9 +18,11 @@ namespace TracksifyAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly Interfaces.IEmailService _emailService;
+        public UserController(IUserRepository userRepository, Interfaces.IEmailService emailService)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         /**
@@ -95,7 +97,7 @@ namespace TracksifyAPI.Controllers
 
             var saved = await _userRepository.CreateUserAsync(user);
 
-            /*try
+            try
             {
                 await _emailService.SendHtmlEmailAsync(
                                                         user.Email.ToString(),
@@ -108,16 +110,16 @@ namespace TracksifyAPI.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
                 Console.WriteLine("Welcome message failed to send");
-            }*/
+            }
 
             if (saved == null)
                 return Problem(title: "Something went wrong");
 
             return CreatedAtAction(
                 nameof(GetById),
-                new {userId = Guid.NewGuid()},
+                new { userId = Guid.NewGuid() },
                 user.ToUserDto());
         }
 

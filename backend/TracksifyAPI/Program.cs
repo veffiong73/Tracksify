@@ -89,7 +89,7 @@ builder.Services.AddDbContext<TracksifyDataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString"));
 });
 
-builder.Services.AddSingleton<IEmailService>(provider =>
+/*builder.Services.AddSingleton<IEmailService>(provider =>
 {
     var logger = provider.GetRequiredService<ILogger<EmailService>>();
     var environment = provider.GetRequiredService<IWebHostEnvironment>();
@@ -97,7 +97,7 @@ builder.Services.AddSingleton<IEmailService>(provider =>
     var templatesFolderPath = Path.Combine(environment.ContentRootPath, "Emails");
 
     return new EmailService(templatesFolderPath, logger, builder.Configuration);
-});
+});*/
 
 var app = builder.Build();
 
