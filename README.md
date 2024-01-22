@@ -6,6 +6,7 @@
 # TRACKSIFY - Employee Time Tracking System
 
 TRACKSIFY is a modern Employee Time Tracking System designed to streamline project management, enhance transparency, and optimize resource utilization within organizations. This README provides essential information to get started with the application.
+
 Live Site: [Tracksify](https://serene-hamster-177974.netlify.app)
 
 API Documentation: [Tracksify](https://tracksify.azurewebsites.net/swagger/index.html)
