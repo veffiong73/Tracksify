@@ -10,6 +10,7 @@ TRACKSIFY is a modern Employee Time Tracking System designed to streamline proje
 - [Getting Started](#getting-started)
 - [Database Setup](#database-setup)
 - [Contributing](#contributing)
+- [Frontend Repository] (#frontend-repository)
 - [License](#license)
 
 ## Features
@@ -88,6 +89,9 @@ To run TRACKSIFY locally, follow these steps:
 
 For database setup and data models, refer to the [Database Setup and Data Models](#database-setup-and-data-models) section in the documentation.
 
+## Frontend Repository
+
+The frontend for Tracksify is hosted on Netlify. For frontend details and deployment, refer to the Tracksify Frontend Repository on GitHub.
 
 ## Contributing
 
