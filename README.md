@@ -7,7 +7,7 @@
 
 TRACKSIFY is a modern Employee Time Tracking System designed to streamline project management, enhance transparency, and optimize resource utilization within organizations. This README provides essential information to get started with the application.
 
-Live Site: [Tracksify](https://serene-hamster-177974.netlify.app)
+Live Site: (https://main--serene-hamster-177974.netlify.app/)
 
 API Documentation: [Tracksify](https://tracksify.azurewebsites.net/swagger/index.html)
 
@@ -77,20 +77,23 @@ Visual Studio: [Install Visual Studio](https://visualstudio.microsoft.com/)
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/Deolamma/Tracksify.git
-   cd tracksify
+   
+2.  **Navigate to the TracksifyAPI directory:**
+    cd TracksifyAPI
    ```
 
-2. **Install Dependencies:**
+3. **Install Dependencies:**
    ```bash
-   # Backend
-   cd backend
-   dotnet restore=
+   npm install
+   
    ```
 
 3. **Run the Application:**
    ```bash
-   # Backend
-   cd backend
+   to start the server
+   npm start
+   # TracksifyAPI
+   cd TracksifyAPI
    dotnet run
 
    # Frontend
@@ -99,7 +102,7 @@ Visual Studio: [Install Visual Studio](https://visualstudio.microsoft.com/)
    ```
 
 4. **Access the Application:**
-   - Open your browser and go to `http://localhost:3000` to access the TRACKSIFY application.
+   - Open your browser and go to `http://localhost:5263` to access the Tracksify application.
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
@@ -107,17 +110,17 @@ Visual Studio: [Install Visual Studio](https://visualstudio.microsoft.com/)
 
 ## Database Setup
 
-The database for Tracksify is hosted on Azure SQL Server.
+The database for Tracksify is hosted on Azure SQL Server and here is the link:
+https://tracksify.azurewebsites.net/swagger/index.html
 <p align="right"><a href="#readme-top">back to top</a></p>
 
 ---
-
 ## Frontend Repository
 
 The frontend for Tracksify is hosted on Netlify. For frontend details and deployment, refer to the Tracksify Frontend Repository on GitHub.
-<p align="right"><a href="#readme-top">back to top</a></p>
+https://main--serene-hamster-177974.netlify.app/
 
----
+<p align="right"><a href="#readme-top">back to top</a></p
 
 ## Contributors
 
