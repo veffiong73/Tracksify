@@ -163,7 +163,7 @@ namespace TracksifyAPI.Controllers
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (userIdClaim == null)
-                return Unauthorized();
+                return NotFound("User Claim returned null");
 
             var userId = Guid.Parse(userIdClaim.Value);
 

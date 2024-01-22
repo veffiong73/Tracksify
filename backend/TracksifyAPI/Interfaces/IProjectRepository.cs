@@ -14,7 +14,6 @@ namespace TracksifyAPI.Interfaces
         Task<Project?> GetProjectByProjectIdASync(Guid projectId);
         Task<List<Project>> GetProjectByUserIdASync(Guid userId);
         Task<bool> ProjectExistsASync(Guid projectId);
-
         Task<ICollection<User>> GetProjectAssigneesASync(Guid projectId);
         Task<Project?> UpdateProjectASync(Guid projectId, Project project);
 

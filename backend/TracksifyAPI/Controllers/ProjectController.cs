@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TracksifyAPI.Dtos.Project;
 using TracksifyAPI.Helpers;
 using TracksifyAPI.Interfaces;
@@ -75,10 +76,43 @@ namespace TracksifyAPI.Controllers
         }
 
         [HttpGet("user-project/{userId:Guid}")]
+        [Authorize(Roles = "Employer")]
         public async Task<IActionResult> GetProjectByUserId([FromRoute] Guid userId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            // Checks if user with user Id passed in exists
+            // Maps user to userDto and returns user Dto
+            if (await _userRepository.UserExistsAsync(userId))
+            {
+                var projects = await _projectRepository.GetProjectByUserIdASync(userId);
+
+                var projectDto = projects!.Select(p => p.ToProjectDto());
+                return Ok(projectDto);
+            }
+            return NotFound();
+        }
+
+        /**
+         * GetProjectByCurrentlyLoggedInUserId - Gets projects based on currently logged in user
+         * Return: returns projectDto or Error
+         */
+        [HttpGet("loggedIn-user-project")]
+        [Authorize(Roles = "Employee")]
+        public async Task<IActionResult> GetProjectByCurrentlyLoggedInUserId()
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // getting ID of the currently logged in user
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                return Unauthorized();
+
+            var userId = Guid.Parse(userIdClaim.Value);
+
 
             // Checks if user with user Id passed in exists
             // Maps user to userDto and returns user Dto

@@ -73,17 +73,18 @@ namespace TracksifyAPI.Repositories
         public async Task<List<Project>> GetProjectByUserIdASync(Guid userId)
         {
             return await _context.Projects
-                                  .Include(p => p.ProjectAssignees
-                                  .Where(u => u.UserId == userId))
-                                  .ToListAsync();
+                         .Include(p => p.ProjectAssignees)
+                         .Where(p => p.ProjectAssignees
+                                      .Any(a => a.UserId == userId))
+                         .ToListAsync();
         }
 
-        /**
-         * ProjectExistsASync - Asynchronously checks that a project exists based on the ID
-         * @projectId: projectId of the project that wants to check if it exists
-         * Return: True or False
-         */
-        public async Task<bool> ProjectExistsASync(Guid projectId)
+            /**
+             * ProjectExistsASync - Asynchronously checks that a project exists based on the ID
+             * @projectId: projectId of the project that wants to check if it exists
+             * Return: True or False
+             */
+            public async Task<bool> ProjectExistsASync(Guid projectId)
         {
             return await _context.Projects
                                  .AnyAsync(p => p.ProjectId == projectId);
