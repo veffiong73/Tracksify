@@ -23,6 +23,8 @@ API Documentation: [Tracksify](https://tracksify.azurewebsites.net/swagger/index
 - [Frontend Repository](#frontend-repository)
 - [License](#license)
 
+<p align="right"><a href="#readme-top">back to top</a></p>
+
 ## Features
 
 - **User Authentication and Role Management:**
@@ -36,6 +38,7 @@ API Documentation: [Tracksify](https://tracksify.azurewebsites.net/swagger/index
 
 - **Real-Time Project Updates:**
   - Users can log work hours and submit updates.
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ## Technological Stack
 
@@ -59,6 +62,7 @@ API Documentation: [Tracksify](https://tracksify.azurewebsites.net/swagger/index
   - BCrypt.Net-Next
   - Microsoft.AspNetCore.Authentication.JwtBearer
   - Microsoft.AspNetCore.Identity.EntityFrameworkCore
+<p align="right"><a href="#readme-top">back to top</a></p>
 
 ## Getting Started
 
