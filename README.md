@@ -9,7 +9,7 @@ TRACKSIFY is a modern Employee Time Tracking System designed to streamline proje
 - [Technological Stack](#technological-stack)
 - [Getting Started](#getting-started)
 - [Database Setup](#database-setup)
-- [Contributing](#contributing)
+- [Contributors](#contributors)
 - [Frontend Repository](#frontend-repository)
 - [License](#license)
 
@@ -93,9 +93,14 @@ The database for Tracksify is hosted on Azure SQL Server.
 
 The frontend for Tracksify is hosted on Netlify. For frontend details and deployment, refer to the Tracksify Frontend Repository on GitHub.
 
-## Contributing
+## Contributors
 
-We welcome contributions! If you'd like to contribute to TRACKSIFY, please follow our [Contribution Guidelines](CONTRIBUTING.md).
+- Emmanuel Adebanjo - [Emmanuel](https://github.com/Deolamma)
+- Mathida Aghogho Duku - [Mathida](https://github.com/mathildaduku)
+- Precious Yakubu - [Precious](https://github.com/preciousyaks17)
+- Victor Effiong Akan - [Victor](https://github.com/veffiong73)
+- Simioluwa Benjamin - [Simioluwa](https://github.com/Tomi-Dev1)
+- Bukola Adedayo - [Bukola](https://github.com/Bukolaope)
 
 ## License
 
