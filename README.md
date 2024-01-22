@@ -10,7 +10,7 @@ TRACKSIFY is a modern Employee Time Tracking System designed to streamline proje
 - [Getting Started](#getting-started)
 - [Database Setup](#database-setup)
 - [Contributing](#contributing)
-- [Frontend Repository] (#frontend-repository)
+- [Frontend Repository](#frontend-repository)
 - [License](#license)
 
 ## Features
