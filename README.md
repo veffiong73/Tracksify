@@ -91,8 +91,6 @@ Visual Studio: [Install Visual Studio](https://visualstudio.microsoft.com/)
 3. **Run the Application:**
    ```bash
    to start the server
-   npm start
-   # TracksifyAPI
    cd TracksifyAPI
    dotnet run
 
