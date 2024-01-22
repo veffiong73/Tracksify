@@ -87,7 +87,7 @@ To run TRACKSIFY locally, follow these steps:
 
 ## Database Setup
 
-For database setup and data models, refer to the [Database Setup and Data Models](#database-setup-and-data-models) section in the documentation.
+The database for Tracksify is hosted on Azure SQL Server.
 
 ## Frontend Repository
 
