@@ -124,6 +124,33 @@ namespace TracksifyAPI.Controllers
         }
 
         /**
+         * GetUserProjectUpdatesForAProjectByUserIdAndProjectId - Get's all project updates for "a project" assigned to a user
+         * @userId: UserId of the User for which his/her project updates are being fetched
+         * @projectId: ProjectId to get updates for, for a particular user
+         * Return: Returns a list of projectUpdates OR error
+         */
+        [HttpGet]
+        [Authorize(Roles = "Employer")]
+        [Route("employee-projectUpdate/project/{userId:Guid}/{projectId:Guid}")]
+        public async Task<IActionResult> GetUserProjectUpdatesForAProjectByUserIdAndProjectId([FromRoute] Guid projectId, [FromRoute] Guid userId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Check if project Exists
+            if (!await _projectRepository.ProjectExistsASync(projectId))
+                return NotFound($"Project with id : {projectId} Not Found");
+
+            if (await _userRepository.UserExistsAsync(userId))
+            {
+                var projectUpdates = await _projectUpdateRepo.GetUserProjectUpdateForSingleProjectByProjectIdAsync(userId, projectId);
+                return Ok(projectUpdates);
+            }
+
+            return NotFound();
+        }
+
+        /**
          * GetProjectUpdateById - Gets a projectUpdate by it's projectUpdateId
          * @projectUpdateId: ProjectUpdateId of projectUpdate to be retrieved
          * Return: Returns a ToProjectUpdateDto response to the client
